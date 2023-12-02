@@ -1,0 +1,24 @@
+#Server Port
+server:
+  port: 8080
+  error:
+    include-message: always
+
+#Flyway Migration
+spring:
+  flyway:
+    enabled: true
+    baselineVersion: 1
+    locations:
+      classpath: db/migration
+    sqlMigrationSuffixes: .sql
+    baselineOnMigrate: true
+    sqlMigrationPrefix: V
+    schemas: public
+  
+  datasource:
+    url: jdbc:postgresql://${env.ELEPHANT_SERVER}:5432/${env.ELEPHANT_USER}?socketTimeout=3
+    username: ${env.ELEPHANT_USER}
+    password: ${env.ELEPHANT_PASSWORD}
+    driverClassName: org.postgresql.Driver
+
