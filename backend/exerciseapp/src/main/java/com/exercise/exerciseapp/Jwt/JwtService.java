@@ -32,17 +32,16 @@ public class JwtService {
             .setSubject(user.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
-            .signWith(getKey(), io.jsonwebtoken.SignatureAlgorithm.HS256)
+            .signWith(getKey())
             //Responsible for compacting JWT
             .compact();
     }
 
     // Key for cryptographic keys
     private Key getKey(){
-        byte[] KeyBytes = Decoders.BASE64.decode(SECRET_KEY);
         //hmacShaKeyFor used in combination with the Keys class, create a secret key
         //suitable for HMAC algorithms
-        return Keys.hmacShaKeyFor(KeyBytes);
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public String getUsernameFrom(String token){
