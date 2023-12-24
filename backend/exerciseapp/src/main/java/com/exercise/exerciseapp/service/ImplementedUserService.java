@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.exercise.exerciseapp.model.User;
 import com.exercise.exerciseapp.repository.UserRepository;
 
-import jakarta.transaction.Transactional;
+
 
 @Service
 public class ImplementedUserService implements UserService {

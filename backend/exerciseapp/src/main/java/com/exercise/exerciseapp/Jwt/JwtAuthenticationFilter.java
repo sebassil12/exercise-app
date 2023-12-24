@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import ch.qos.logback.core.filter.Filter;
 
 import org.springframework.util.StringUtils;
 import jakarta.servlet.FilterChain;
