@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,21 +22,24 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
-    private Integer userId;
-    private String username;
-    private String email;
-    private String password;
+    Integer userId;
+    String username;
+    String email;
+    String password;
     @Column(name = "is_active")
-    private Boolean isActive = true;
+    Boolean isActive = true;
+    @Enumerated(EnumType.STRING)
+    Role role;
 
     public User(){
 
     }
-    public User( Integer userId, String username, String email, String password){
-        this.userId=userId;
-        this.username=username;
-        this.email=email;
-        this.password=password;
+    private User(Builder builder){
+        this.userId=builder.userId;
+        this.username=builder.username;
+        this.email=builder.email;
+        this.password=builder.password;
+        this.role=builder.role;
     }
 
     public Integer getId(){
@@ -102,6 +107,44 @@ public class User implements UserDetails{
         throw new UnsupportedOperationException("Unimplemented method 'isEnabled'");
     }
    
+    //Class Builder
+    public static class Builder{
+        private Integer userId;
+        private String username;
+        private String email;
+        private String password;
+        @Enumerated(EnumType.STRING)
+        private Role role;
+
+        public Builder userId(Integer userId){
+            this.userId=userId;
+            return this;
+        }
+        public Builder username(String username){
+            this.username=username;
+            return this;
+        }
+        public Builder email(String email){
+            this.email=email;
+            return this;
+        }
+        public Builder password(String password){
+            this.password=password;
+            return this;
+        }
+        public Builder role(Role role){
+            this.role=role;
+            return this;
+        }
+        public User build(){
+            return new User(this);
+        }
+
+    }
+
+    public Object Builder(){
+        return null;
+    }
    
 
 }

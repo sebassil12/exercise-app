@@ -1,4 +1,4 @@
-package com.exercise.Auth;
+package com.exercise.exerciseapp.Auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.exercise.exerciseapp.Jwt.JwtService;
+import com.exercise.exerciseapp.model.Role;
+import com.exercise.exerciseapp.model.User;
 import com.exercise.exerciseapp.repository.UserRepository;
 
 @Service
@@ -32,7 +34,20 @@ public class AuthService {
         String token = jwtService.getToken(user);
         AuthResponse authResponse = new AuthResponse.Builder().token(token).build();
         return authResponse;
-        
-
     }
+
+    public AuthResponse register(RegisterRequest register){
+        User user = new User.Builder()
+                    .username(register.getUsername())
+                    .email(register.email)
+                    .password(passwordEncoder.encode(register.getPassword()))
+                    .role(Role.USER)
+                    .build();
+        userRepository.save(user);
+
+        return new AuthResponse.Builder()
+                .token(jwtService.getToken(user))
+                .build();
+    }
+
 }

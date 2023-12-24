@@ -1,4 +1,4 @@
-package com.exercise.Auth;
+package com.exercise.exerciseapp.Auth;
 
 public class RegisterRequest {
     String username;
