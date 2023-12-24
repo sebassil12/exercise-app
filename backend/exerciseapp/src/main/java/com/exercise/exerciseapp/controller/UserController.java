@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.exercise.exerciseapp.model.User;
+import com.exercise.exerciseapp.model.DTO.UserDTO;
 import com.exercise.exerciseapp.service.ImplementedUserService;
 
 @RestController
@@ -39,8 +40,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Optional<User>> getSingleUser(@PathVariable Integer userId){
-        return new ResponseEntity<Optional<User>>(userService.getUser(userId), HttpStatus.OK);
+    public ResponseEntity<UserDTO> getSingleUser(@PathVariable Integer userId){
+        UserDTO userDTO = userService.getUser(userId);
+        if (userDTO == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(userDTO);
     }
 
     @PostMapping

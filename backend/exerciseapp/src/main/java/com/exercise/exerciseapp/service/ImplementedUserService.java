@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.exercise.exerciseapp.model.User;
+import com.exercise.exerciseapp.model.DTO.UserDTO;
 import com.exercise.exerciseapp.repository.UserRepository;
 
 
@@ -22,8 +23,17 @@ public class ImplementedUserService implements UserService {
     }
 
     @Override
-    public Optional<User> getUser(Integer userId) {
-        return userRepository.findById(userId);
+    public UserDTO getUser(Integer userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if(user != null){
+            UserDTO userDTO = new UserDTO.Builder()
+            .username(user.getUsername())
+            .email(user.getEmail())
+            .isActive(user.getIsActive())
+            .build();
+            return userDTO;
+        }
+        return null;
     }
 
     @Override
