@@ -1,0 +1,10 @@
+.container-fluid{
+    margin-left: 10%;
+    font-size: larger;
+}
+
+.login{
+    width: 60vw;
+    display: flex;
+    flex-direction: row-reverse;
+}
