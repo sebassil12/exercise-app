@@ -3,6 +3,7 @@ package com.exercise.exerciseapp.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -32,7 +33,10 @@ public class SecurityConfig {
         .csrf(csrf->
         csrf.disable())
         .authorizeHttpRequests(authRequest->
-        authRequest.requestMatchers("/auth/**").permitAll()
+        authRequest
+        .requestMatchers("/auth/**").permitAll()
+        .requestMatchers(HttpMethod.GET).permitAll()
+        .requestMatchers(HttpMethod.OPTIONS).permitAll()
         .anyRequest().authenticated()
         )
         .sessionManagement(sessionManager ->
@@ -43,6 +47,4 @@ public class SecurityConfig {
         .build();
     }
 
-
-  
 }

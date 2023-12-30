@@ -13,10 +13,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "USER1234EXERCISEAPP";
+    private static final String SECRET_KEY = "USER1234EXERCISEAPP86E3272357538782F413F4428472B4B6250655368566B59703373367";
 
     //UserDetails interface represents core user information, encapsulates
     //user info, roles, aids authentication, auth and integrates with UserDetailsService
@@ -42,7 +43,8 @@ public class JwtService {
     private Key getKey(){
         //hmacShaKeyFor used in combination with the Keys class, create a secret key
         //suitable for HMAC algorithms
-        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        byte[] KeyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(KeyBytes);
     }
 
     public String getUsernameFrom(String token){
